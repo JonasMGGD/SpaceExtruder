@@ -17,10 +17,6 @@ public class PlayerShooting : MonoBehaviour {
 
     // ReSharper disable Unity.PerformanceAnalysis
     void Shoot() {
-        GameObject projectile = ObjectPool.Instance.SpawnFromPool("Projectile", firePoint.position, firePoint.rotation);
-        if (projectile != null) {
-            Projectile p = projectile.GetComponent<Projectile>();
-            p.isEnemyProjectile = false; // wichtig!
-        }
+        GameObject projectile = ObjectPool.Instance.SpawnFromPool("PlayerProjectile", firePoint.position, firePoint.rotation);
     }
 }

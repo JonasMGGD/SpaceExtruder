@@ -28,7 +28,9 @@ public class EnemySpawner : MonoBehaviour {
 
                 string tagToSpawn = (Random.value < heinzSpawnChance) ? "EnemyHeinz" : "Enemy";
 
-                GameObject enemy = ObjectPool.Instance.SpawnFromPool(tagToSpawn, spawnPos, Quaternion.identity);
+                Quaternion rotation = Quaternion.LookRotation(Vector3.left);
+                GameObject enemy = ObjectPool.Instance.SpawnFromPool(tagToSpawn, spawnPos, rotation);
+
 
                 yield return new WaitForSeconds(0.15f);
             }
