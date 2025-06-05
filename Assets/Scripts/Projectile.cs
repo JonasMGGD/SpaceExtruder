@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour {
             ObjectPool.Instance.ReturnToPool("EnemyProjectile", gameObject);
         }
         else if (!isEnemyProjectile && other.CompareTag("Enemy")) {
-            Debug.Log("Enemy hit!");
+            ScoreManager.Instance.AddScore(10);
             string enemyTag = other.gameObject.tag;
             ObjectPool.Instance.ReturnToPool(enemyTag, other.gameObject);
             ObjectPool.Instance.ReturnToPool("PlayerProjectile", gameObject);

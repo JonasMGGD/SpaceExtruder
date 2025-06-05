@@ -114,10 +114,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  fireRate: 1.5
   firePoints:
   - {fileID: 4234011427239933085}
   - {fileID: 8092349900509917076}
+  xMin: -55
+  xMax: 55
+  smoothTime: 0.1
 --- !u!136 &6862153664610182146
 CapsuleCollider:
   m_ObjectHideFlags: 0
