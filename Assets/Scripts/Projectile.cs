@@ -28,10 +28,11 @@ public class Projectile : MonoBehaviour {
             other.GetComponent<PlayerHealth>()?.TakeDamage(1);
             ObjectPool.Instance.ReturnToPool("EnemyProjectile", gameObject);
         }
-        else if (!isEnemyProjectile && other.CompareTag("Enemy")) {
-            ScoreManager.Instance.AddScore(10);
-            string enemyTag = other.gameObject.tag;
-            ObjectPool.Instance.ReturnToPool(enemyTag, other.gameObject);
+        else if (!isEnemyProjectile && (other.CompareTag("Enemy") || other.CompareTag("EnemyHeinz"))) {
+            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+            if (enemyHealth != null) {
+                enemyHealth.TakeDamage(1);
+            }
             ObjectPool.Instance.ReturnToPool("PlayerProjectile", gameObject);
         }
     }

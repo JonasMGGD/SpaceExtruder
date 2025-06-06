@@ -69,8 +69,13 @@ public class Enemy : MonoBehaviour {
             }
         }
 
-        if (transform.position.z < cam.position.z - 20f) {
-            gameObject.SetActive(false);
+        float playerZLimitMin = cam.position.z + 45f;
+
+        if (transform.position.z < playerZLimitMin) {
+            ScoreManager.Instance.AddScore(-10);
+            FloatingScoreManager.Instance.SpawnScore(transform.position, -10);
+            string enemyTag = gameObject.tag;
+            ObjectPool.Instance.ReturnToPool(enemyTag, gameObject);
         }
     }
 

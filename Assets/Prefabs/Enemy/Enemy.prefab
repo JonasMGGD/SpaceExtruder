@@ -148,37 +148,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &8471587245057419354
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7912308355922531700}
-  m_Layer: 0
-  m_Name: ModelRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7912308355922531700
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8471587245057419354}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7670009, y: 0.49190235, z: 2.1208897}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8577371097903603880}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8670453848454275883
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,6 +245,7 @@ GameObject:
   - component: {fileID: 8577371097903603880}
   - component: {fileID: 5526901805004493056}
   - component: {fileID: 8343476573416541934}
+  - component: {fileID: 762722069448434955}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -300,7 +270,6 @@ Transform:
   - {fileID: 9164665906397379386}
   - {fileID: 5014165113148714750}
   - {fileID: 2616923756525740384}
-  - {fileID: 7912308355922531700}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &5526901805004493056
@@ -345,3 +314,17 @@ CapsuleCollider:
   m_Height: 18
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &762722069448434955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8954037030280460818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc35b74de7c4c418d680b27b2004272, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1
+  healthUI: {fileID: 0}
