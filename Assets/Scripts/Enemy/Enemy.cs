@@ -62,19 +62,25 @@ public class Enemy : MonoBehaviour {
             Shoot();
             string enemyTag = gameObject.tag;
             if (enemyTag == "EnemyHeinz") {
-                fireCooldown = 0.2f;
+                fireCooldown = 0.3f;
             }
             else {
-                fireCooldown = Random.Range(1f, 1.8f);
+                fireCooldown = Random.Range(1.3f, 2.1f);
             }
         }
 
         float playerZLimitMin = cam.position.z + 45f;
 
         if (transform.position.z < playerZLimitMin) {
-            ScoreManager.Instance.AddScore(-10);
-            FloatingScoreManager.Instance.SpawnScore(transform.position, -10);
             string enemyTag = gameObject.tag;
+            if( enemyTag == "EnemyHeinz") {
+                ScoreManager.Instance.AddScore(-100);
+                FloatingScoreManager.Instance.SpawnScore(transform.position, -100);
+            }
+            else {
+                ScoreManager.Instance.AddScore(-10);
+                FloatingScoreManager.Instance.SpawnScore(transform.position, -10);
+            }
             ObjectPool.Instance.ReturnToPool(enemyTag, gameObject);
         }
     }
@@ -116,7 +122,10 @@ public class Enemy : MonoBehaviour {
     // ReSharper disable Unity.PerformanceAnalysis
     void SpawnProjectile(Transform firePoint) {
         var flippedRotation = Quaternion.Euler(0f, 180f, 0f);
-        ObjectPool.Instance.SpawnFromPool("EnemyProjectile", firePoint.position, flippedRotation);
+        string enemyTag = gameObject.tag;
+        var tagString = "EnemyProjectile";
+        if (enemyTag == "EnemyHeinz") tagString = "HeinzProjectile";
+        ObjectPool.Instance.SpawnFromPool(tagString, firePoint.position, flippedRotation);
     }
 
     IEnumerator DelayedFire(Transform fp1, Transform fp2) {
