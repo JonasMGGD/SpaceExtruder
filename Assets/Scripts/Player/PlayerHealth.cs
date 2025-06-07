@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour {
     public int maxHealth = 3;
@@ -40,10 +41,17 @@ public class PlayerHealth : MonoBehaviour {
         }
     }
 
-    private void Die() {
-        Debug.Log("Player dead");
-        gameObject.SetActive(false);
+    void Die() {
+        int finalScore = ScoreManager.Instance.GetScore();
+        Debug.Log(finalScore);
+        string name = PlayerPrefs.GetString("PlayerName", "Unknown");
+
+        LeaderboardManager.Instance.AddScore(name, finalScore);
+        PlayerPrefs.SetInt("LastScore", finalScore);
+
+        SceneManager.LoadScene("EndScene");
     }
+
 
     private IEnumerator InvulnerabilityFlash() {
         isInvulnerable = true;

@@ -301,9 +301,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99793c3cf486cc348b74179473bf5c50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  borderZOffset: 47.5
-  dangerDistance: 50
-  maxDistance: 100
+  borderZOffset: 45
+  dangerDistance: 5
+  maxDistance: 10
   safeColor: {r: 1, g: 1, b: 1, a: 1}
   dangerColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &236079162
@@ -409,7 +409,7 @@ Transform:
   m_GameObject: {fileID: 240467040}
   serializedVersion: 2
   m_LocalRotation: {x: -0.3535534, y: 0.61237246, z: -0.3535534, w: 0.61237246}
-  m_LocalPosition: {x: 62.5, y: -21.179493, z: 76.68395}
+  m_LocalPosition: {x: 64.38, y: -23.18, z: 75.52}
   m_LocalScale: {x: 55, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1013,12 +1013,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 389bcbd4632603044b1ea4fb3ab3795c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnInterval: 1.3
+  baseSpawnInterval: 2
+  minSpawnInterval: 0.5
+  difficultyIncreaseRate: 0.05
+  timeElapsed: 0
   spawnRadius: 50
   minEnemiesPerWave: 3
   maxEnemiesPerWave: 6
   spawnZOffset: 120
-  heinzSpawnChance: 0.146
+  heinzSpawnChance: 0.005
 --- !u!4 &860801115
 Transform:
   m_ObjectHideFlags: 0
@@ -1645,7 +1648,7 @@ Transform:
   m_GameObject: {fileID: 1512825251}
   serializedVersion: 2
   m_LocalRotation: {x: -0.3535534, y: -0.61237246, z: 0.3535534, w: 0.61237246}
-  m_LocalPosition: {x: -62.5, y: -21.179493, z: 76.68395}
+  m_LocalPosition: {x: -62.5, y: -23.21, z: 75.54}
   m_LocalScale: {x: 55, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1762,7 +1765,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -50}
+  m_AnchoredPosition: {x: 219, y: -1000}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1900592185

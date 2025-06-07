@@ -11,33 +11,34 @@ public class FrontBorderController : MonoBehaviour {
 
     private Renderer rend;
     private Transform cam;
-    private GameObject[] _gameObjects;
 
     private void Start() {
-        _gameObjects = GameObject.FindGameObjectsWithTag("Enemy");
         rend = GetComponent<Renderer>();
         cam = Camera.main.transform;
     }
 
     private void Update() {
-        float nearestEnemyZ = float.MinValue;
-        foreach (var enemy in _gameObjects) {
-            if (!enemy.activeInHierarchy) continue;
+        transform.position = new Vector3(transform.position.x, transform.position.y, cam.position.z + borderZOffset);
 
+        float nearestEnemyZ = float.MinValue;
+        foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
+            if (!enemy.activeInHierarchy) continue;
             float z = enemy.transform.position.z;
             if (z > nearestEnemyZ) {
                 nearestEnemyZ = z;
             }
         }
 
-        float distance = (cam.position.z + borderZOffset) - nearestEnemyZ;
+        float borderZ = cam.position.z + borderZOffset;
+        float distance = nearestEnemyZ - borderZ;
 
-        float t = Mathf.InverseLerp(maxDistance, dangerDistance, distance);
-        Color finalColor = Color.Lerp(safeColor, dangerColor, t);
+        float t = Mathf.InverseLerp(dangerDistance, maxDistance, distance);
+        Color finalColor = Color.Lerp(dangerColor, safeColor, t);
 
-        if (rend.material.HasProperty(EmissionColor))
-            rend.material.SetColor(EmissionColor, finalColor);
+        if (rend.material.HasProperty("_EmissionColor"))
+            rend.material.SetColor("_EmissionColor", finalColor);
         else
             rend.material.color = finalColor;
     }
+
 }
