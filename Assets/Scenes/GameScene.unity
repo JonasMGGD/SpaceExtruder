@@ -935,6 +935,18 @@ MonoBehaviour:
   - tag: HeinzProjectile
     prefab: {fileID: 3060063056816498124, guid: c9dcffd2fe2084b4fbe7c3ba8b304587, type: 3}
     size: 100
+  - tag: Invincibility
+    prefab: {fileID: 1375783060950928923, guid: 595119904abce3d4a832122ab9310c3b, type: 3}
+    size: 1
+  - tag: RapidFire
+    prefab: {fileID: 1375783060950928923, guid: 27ffb1688d5910844b142befa1b71917, type: 3}
+    size: 1
+  - tag: ScoreBoost
+    prefab: {fileID: 1375783060950928923, guid: b54bb8f6da39a374dae782205ed763c3, type: 3}
+    size: 1
+  - tag: Heal
+    prefab: {fileID: 1375783060950928923, guid: 820ff721f2c57bb4c9d6553d36f173d2, type: 3}
+    size: 1
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,8 +1006,9 @@ GameObject:
   m_Component:
   - component: {fileID: 860801115}
   - component: {fileID: 860801114}
+  - component: {fileID: 860801116}
   m_Layer: 0
-  m_Name: EnemySpawner
+  m_Name: Spawners
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1037,6 +1050,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &860801116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860801113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808900b62e2ad5e4ba8b4cbd35e8622a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpPrefabs: []
+  spawnInterval: 10
+  spawnXRange: {x: 25, y: 25}
+  spawnZ: 50
 --- !u!1001 &1019837351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1116,13 +1145,7 @@ PrefabInstance:
       addedObject: {fileID: 1019837353}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8e902729b5e39a4ea320ddfb371c86c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1019837355}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8e902729b5e39a4ea320ddfb371c86c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1019837356}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8e902729b5e39a4ea320ddfb371c86c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1019837362}
+      addedObject: {fileID: 1019837360}
   m_SourcePrefab: {fileID: 100100000, guid: c8e902729b5e39a4ea320ddfb371c86c, type: 3}
 --- !u!1 &1019837352 stripped
 GameObject:
@@ -1179,41 +1202,12 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &1019837355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1019837352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bbf6c38dad343e4a9affc94efdaec7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 100
-  xLimits: {x: -55, y: 55}
-  zOffsetLimits: {x: 5, y: 35}
---- !u!114 &1019837356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1019837352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d88c445ea8ecc544aaf4ec9f3aad7ead, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firePoint: {fileID: 541857242}
-  fireRate: 0.1
 --- !u!4 &1019837359 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c8e902729b5e39a4ea320ddfb371c86c, type: 3}
   m_PrefabInstance: {fileID: 1019837351}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1019837362
+--- !u!114 &1019837360
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1222,15 +1216,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1019837352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e67d801740f4a9a8219f2e54f88d491, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e89f73b5c0a497882e91c5808071082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  moveSpeed: 150
+  xLimits: {x: -55, y: 55}
+  zOffsetLimits: {x: -5, y: 35}
+  firePoint: {fileID: 541857242}
+  fireRate: 0.2
   heartImages:
   - {fileID: 1198445414}
   - {fileID: 236079164}
   - {fileID: 1158040221}
-  invulTime: 0.3
+  invulTime: 0.2
 --- !u!1 &1096008710
 GameObject:
   m_ObjectHideFlags: 0

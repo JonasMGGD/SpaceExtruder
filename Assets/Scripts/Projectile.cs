@@ -1,3 +1,4 @@
+using Player;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour {
@@ -25,7 +26,7 @@ public class Projectile : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (isEnemyProjectile && other.CompareTag("Player")) {
-            other.GetComponent<PlayerHealth>()?.TakeDamage(1);
+            other.GetComponent<PlayerController>()?.TakeDamage(1);
             ObjectPool.Instance.ReturnToPool("EnemyProjectile", gameObject);
         }
         else if (!isEnemyProjectile && (other.CompareTag("Enemy") || other.CompareTag("EnemyHeinz"))) {
