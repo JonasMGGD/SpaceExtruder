@@ -25,7 +25,9 @@ namespace Player {
         private Renderer[] renderers;
 
         public void SetInvincible(bool active) { isInvulnerable = active; }
-        public void SetRapidFire(bool active) { fireRate = active ? 0.05f : fireRate; }
+
+        public void SetRapidFire(bool active) { fireRate = active ? 0.05f : 0.2f; }
+
         public void Heal(int amount) {
             if(currentHealth == maxHealth) return;
             currentHealth += amount;
@@ -104,8 +106,10 @@ namespace Player {
 
             LeaderboardManager.Instance.AddScore(name, finalScore);
             PlayerPrefs.SetInt("LastScore", finalScore);
+            Destroy(gameObject);
 
-            SceneManager.LoadScene("EndScene");
+            Time.timeScale = 0f;
+            SceneFader.Instance.FadeToScene("EndScene");
         }
 
         private IEnumerator InvulnerabilityFlash() {

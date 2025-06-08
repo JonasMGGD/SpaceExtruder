@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 116224537}
   - component: {fileID: 116224538}
   - component: {fileID: 116224539}
+  - component: {fileID: 116224540}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -179,6 +180,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floatingScorePrefab: {fileID: 7421294827361713363, guid: b98947298edbb9b439bedd9ced847bad, type: 3}
   canvas: {fileID: 1156703687}
+--- !u!114 &116224540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116224535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab3e674919a445243bbc1d3b2237d414, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &138731298
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,8 +203,6 @@ GameObject:
   - component: {fileID: 138731299}
   - component: {fileID: 138731302}
   - component: {fileID: 138731301}
-  - component: {fileID: 138731300}
-  - component: {fileID: 138731303}
   m_Layer: 0
   m_Name: BorderTop
   m_TagString: Untagged
@@ -208,34 +219,12 @@ Transform:
   m_GameObject: {fileID: 138731298}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0, z: -0, w: 0.8660254}
-  m_LocalPosition: {x: 1, y: -4.64, z: 86.17}
+  m_LocalPosition: {x: 1, y: 0.6, z: 89.2}
   m_LocalScale: {x: 127, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 330585546}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &138731300
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 138731298}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &138731301
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -289,23 +278,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 138731298}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &138731303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 138731298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99793c3cf486cc348b74179473bf5c50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  borderZOffset: 45
-  dangerDistance: 5
-  maxDistance: 10
-  safeColor: {r: 1, g: 1, b: 1, a: 1}
-  dangerColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &236079162
 GameObject:
   m_ObjectHideFlags: 0
@@ -935,18 +907,30 @@ MonoBehaviour:
   - tag: HeinzProjectile
     prefab: {fileID: 3060063056816498124, guid: c9dcffd2fe2084b4fbe7c3ba8b304587, type: 3}
     size: 100
-  - tag: Invincibility
+  - tag: InvincibilityEffect
     prefab: {fileID: 1375783060950928923, guid: 595119904abce3d4a832122ab9310c3b, type: 3}
-    size: 1
-  - tag: RapidFire
+    size: 5
+  - tag: RapidFireEffect
     prefab: {fileID: 1375783060950928923, guid: 27ffb1688d5910844b142befa1b71917, type: 3}
-    size: 1
-  - tag: ScoreBoost
+    size: 5
+  - tag: ScoreBoostEffect
     prefab: {fileID: 1375783060950928923, guid: b54bb8f6da39a374dae782205ed763c3, type: 3}
-    size: 1
-  - tag: Heal
+    size: 5
+  - tag: HealEffect
     prefab: {fileID: 1375783060950928923, guid: 820ff721f2c57bb4c9d6553d36f173d2, type: 3}
-    size: 1
+    size: 5
+  - tag: ContainerRed
+    prefab: {fileID: 2303814132901275719, guid: b44b18c78447ad345b3bccb7bfb0cc87, type: 3}
+    size: 10
+  - tag: ContainerGreen
+    prefab: {fileID: 2303814132901275719, guid: 4aa869c4841706a47a5b270ffe911280, type: 3}
+    size: 10
+  - tag: ContainerBlue
+    prefab: {fileID: 2303814132901275719, guid: 5b74df32736de384aa7a9c2523e13904, type: 3}
+    size: 10
+  - tag: Cylinder
+    prefab: {fileID: 2129820230905850682, guid: f7b3aa8ead2299b44a69d9aa58d141ff, type: 3}
+    size: 10
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1007,6 +991,7 @@ GameObject:
   - component: {fileID: 860801115}
   - component: {fileID: 860801114}
   - component: {fileID: 860801116}
+  - component: {fileID: 860801117}
   m_Layer: 0
   m_Name: Spawners
   m_TagString: Untagged
@@ -1033,7 +1018,7 @@ MonoBehaviour:
   spawnRadius: 50
   minEnemiesPerWave: 3
   maxEnemiesPerWave: 6
-  spawnZOffset: 120
+  spawnZOffset: 150
   heinzSpawnChance: 0.005
 --- !u!4 &860801115
 Transform:
@@ -1062,10 +1047,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808900b62e2ad5e4ba8b4cbd35e8622a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpPrefabs: []
+  powerUps:
+  - {fileID: 1375783060950928923, guid: 820ff721f2c57bb4c9d6553d36f173d2, type: 3}
+  - {fileID: 1375783060950928923, guid: 595119904abce3d4a832122ab9310c3b, type: 3}
+  - {fileID: 1375783060950928923, guid: 27ffb1688d5910844b142befa1b71917, type: 3}
+  - {fileID: 1375783060950928923, guid: b54bb8f6da39a374dae782205ed763c3, type: 3}
   spawnInterval: 10
-  spawnXRange: {x: 25, y: 25}
-  spawnZ: 50
+  spawnRadius: 50
+  spawnZOffset: 350
+--- !u!114 &860801117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860801113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71f22124f309475089f535433bd8f8e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnInterval: 1.5
+  xRange: {x: -120, y: -75}
+  xRangeRight: {x: 75, y: 120}
+  spawnZOffset: 200
 --- !u!1001 &1019837351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1142,39 +1147,16 @@ PrefabInstance:
       addedObject: {fileID: 1019837354}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8e902729b5e39a4ea320ddfb371c86c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1019837353}
+      addedObject: {fileID: 1019837360}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8e902729b5e39a4ea320ddfb371c86c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1019837360}
+      addedObject: {fileID: 1019837363}
   m_SourcePrefab: {fileID: 100100000, guid: c8e902729b5e39a4ea320ddfb371c86c, type: 3}
 --- !u!1 &1019837352 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c8e902729b5e39a4ea320ddfb371c86c, type: 3}
   m_PrefabInstance: {fileID: 1019837351}
   m_PrefabAsset: {fileID: 0}
---- !u!136 &1019837353
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1019837352}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 5
-  m_Height: 11
-  m_Direction: 0
-  m_Center: {x: 0, y: 2.0185604, z: -4}
 --- !u!54 &1019837354
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1221,7 +1203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 150
   xLimits: {x: -55, y: 55}
-  zOffsetLimits: {x: -5, y: 35}
+  zOffsetLimits: {x: 3, y: 35}
   firePoint: {fileID: 541857242}
   fireRate: 0.2
   heartImages:
@@ -1229,6 +1211,27 @@ MonoBehaviour:
   - {fileID: 236079164}
   - {fileID: 1158040221}
   invulTime: 0.2
+--- !u!65 &1019837363
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019837352}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 12, y: 6, z: 1}
+  m_Center: {x: 0, y: 2, z: -0.5}
 --- !u!1 &1096008710
 GameObject:
   m_ObjectHideFlags: 0

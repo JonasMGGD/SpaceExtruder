@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3737277993272775759}
   - component: {fileID: 4823911240396193340}
   m_Layer: 0
-  m_Name: RapidFire
+  m_Name: RapidFireEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

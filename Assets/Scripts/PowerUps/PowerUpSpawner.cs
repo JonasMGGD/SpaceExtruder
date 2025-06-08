@@ -1,23 +1,32 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace PowerUps {
     public class PowerUpSpawner : MonoBehaviour {
-        public string[] powerUps = {"Heal", "RapidFire", "ScoreBoost", "Invincibility"};
+        public GameObject[] powerUps;
 
         public float spawnInterval = 10f;
-        public Vector2 spawnXRange;
-        public float spawnZ;
+        public float spawnRadius = 15f;
+        public float spawnZOffset = 30f;
 
         private void Start() {
-            Debug.Log(powerUps[1]);
-            InvokeRepeating(nameof(Spawn), spawnInterval, spawnInterval);
+            StartCoroutine(SpawnLoop());
         }
 
-        void Spawn() {
-            int index = Random.Range(0, powerUps.Length - 1);
-            Vector3 pos = new Vector3(Random.Range(spawnXRange.x, spawnXRange.y), 0f, spawnZ);
-            ObjectPool.Instance.SpawnFromPool(powerUps[index], pos, Quaternion.identity);
+        // ReSharper disable Unity.PerformanceAnalysis
+        IEnumerator SpawnLoop() {
+            while (true) {
+                yield return new WaitForSeconds(spawnInterval);
+                string tag = powerUps[Random.Range(0, powerUps.Length)].name;
+
+                Vector3 spawnPos = new Vector3(
+                    Random.Range(-spawnRadius, spawnRadius),
+                    0f,
+                    spawnZOffset + Random.Range(-2f, 2f)
+                );
+
+                ObjectPool.Instance.SpawnFromPool(tag, spawnPos, Quaternion.identity);
+            }
         }
     }
 }

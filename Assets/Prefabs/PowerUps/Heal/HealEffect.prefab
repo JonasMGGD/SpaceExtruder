@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3737277993272775759}
   - component: {fileID: 4823911240396193340}
   m_Layer: 0
-  m_Name: ScoreBoost
+  m_Name: HealEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e65441c20b487df4a8e11a3fddc714b7, type: 2}
+  - {fileID: 2100000, guid: 4f4999ac86b99984ebcdcc327ac1fe4b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -123,4 +123,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8959102d8f7775e469854929e123b9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effect: {fileID: 11400000, guid: 0611e96bb9e4445498723b5f890e5981, type: 2}
+  effect: {fileID: 11400000, guid: 2661d393ac41d7640822a9fe4e865a7a, type: 2}

@@ -11,10 +11,10 @@ public class EndScene : MonoBehaviour {
     }
 
     public void OnRetryClicked() {
-        SceneManager.LoadScene("GameScene");
+        SceneFader.Instance.FadeToScene("GameScene");
     }
 
     public void OnMenuClicked() {
-        SceneManager.LoadScene("StartScene");
+        SceneFader.Instance.FadeToScene("StartScene");
     }
 }

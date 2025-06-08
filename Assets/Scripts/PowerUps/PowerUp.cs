@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace PowerUps {
@@ -7,8 +8,8 @@ namespace PowerUps {
         private void OnTriggerEnter(Collider other) {
             if (other.CompareTag("Player")) {
                 PowerUpManager.Instance.ApplyPowerUp(effect);
-                string effectName = effect.name;
-                ObjectPool.Instance.ReturnToPool(effectName, gameObject);
+                string name = gameObject.name.Replace("(Clone)", "").Trim();
+                ObjectPool.Instance.ReturnToPool(name, gameObject);
             }
         }
     }

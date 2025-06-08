@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 40
-  maxLifetime: 2
+  maxLifetime: 4
   isEnemyProjectile: 1
 --- !u!136 &6287613170680850034
 CapsuleCollider:

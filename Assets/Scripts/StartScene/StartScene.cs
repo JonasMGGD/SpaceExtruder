@@ -8,8 +8,10 @@ public class StartScene : MonoBehaviour {
     public Transform leaderboardParent;
     public GameObject scoreEntryPrefab;
     public GameObject noScoresText;
+    public GameObject powerUpInfo;
 
     private void Start() {
+        powerUpInfo.SetActive(false);
         DisplayScores();
     }
 
@@ -18,7 +20,7 @@ public class StartScene : MonoBehaviour {
         if (string.IsNullOrEmpty(name)) return;
 
         PlayerPrefs.SetString("PlayerName", name);
-        SceneManager.LoadScene("GameScene");
+        SceneFader.Instance.FadeToScene("GameScene");
     }
 
     public void OnClearScoresClicked() {
@@ -61,6 +63,22 @@ public class StartScene : MonoBehaviour {
         void SetColor(TMP_Text[] texts, Color color) {
             foreach (var t in texts)
                 t.color = color;
+        }
+    }
+
+    public void OnQuitClicked() {
+        Application.Quit();
+    }
+
+    public void OnPowerUpInfoClicked() {
+        if (powerUpInfo) {
+            powerUpInfo.SetActive(true);
+        }
+    }
+
+    public void OnPowerUpInfoCloseClicked() {
+        if (powerUpInfo) {
+            powerUpInfo.SetActive(false);
         }
     }
 }

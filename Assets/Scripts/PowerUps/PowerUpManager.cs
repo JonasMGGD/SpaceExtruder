@@ -21,6 +21,7 @@ namespace PowerUps {
             activeCoroutines.Add(c);
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator RemoveAfterDelay(PowerUpEffect effect) {
             yield return new WaitForSeconds(effect.duration);
             effect.Deactivate(player);
