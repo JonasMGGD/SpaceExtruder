@@ -919,18 +919,6 @@ MonoBehaviour:
   - tag: HealEffect
     prefab: {fileID: 1375783060950928923, guid: 820ff721f2c57bb4c9d6553d36f173d2, type: 3}
     size: 5
-  - tag: ContainerRed
-    prefab: {fileID: 2303814132901275719, guid: b44b18c78447ad345b3bccb7bfb0cc87, type: 3}
-    size: 10
-  - tag: ContainerGreen
-    prefab: {fileID: 2303814132901275719, guid: 4aa869c4841706a47a5b270ffe911280, type: 3}
-    size: 10
-  - tag: ContainerBlue
-    prefab: {fileID: 2303814132901275719, guid: 5b74df32736de384aa7a9c2523e13904, type: 3}
-    size: 10
-  - tag: Cylinder
-    prefab: {fileID: 2129820230905850682, guid: f7b3aa8ead2299b44a69d9aa58d141ff, type: 3}
-    size: 10
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,10 +1055,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71f22124f309475089f535433bd8f8e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnInterval: 1.5
-  xRange: {x: -120, y: -75}
-  xRangeRight: {x: 75, y: 120}
-  spawnZOffset: 200
 --- !u!1001 &1019837351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1089,7 +1073,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c8e902729b5e39a4ea320ddfb371c86c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c8e902729b5e39a4ea320ddfb371c86c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1201,7 +1185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e89f73b5c0a497882e91c5808071082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 150
+  moveSpeed: 120
   xLimits: {x: -55, y: 55}
   zOffsetLimits: {x: 3, y: 35}
   firePoint: {fileID: 541857242}
@@ -1298,7 +1282,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f027a0b59f598874cab064bd3d3bee98, type: 2}
+  - {fileID: 2100000, guid: 71cdd1d44e910c5479e0c9f829494680, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1367,7 +1351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd91eaa77eaac3844858fa33d34c7d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: -0.5
+  scrollSpeed: -0.02
 --- !u!1 &1156703684
 GameObject:
   m_ObjectHideFlags: 0

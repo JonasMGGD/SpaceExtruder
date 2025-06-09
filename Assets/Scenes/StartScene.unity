@@ -4045,7 +4045,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.56078434}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4662,7 +4662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd91eaa77eaac3844858fa33d34c7d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: -0.2
+  scrollSpeed: -0.02
 --- !u!64 &1727124295
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4708,7 +4708,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f027a0b59f598874cab064bd3d3bee98, type: 2}
+  - {fileID: 2100000, guid: 71cdd1d44e910c5479e0c9f829494680, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

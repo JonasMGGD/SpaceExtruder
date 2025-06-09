@@ -15,5 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/EndScene.unity
     guid: e78e489aa0632fd479b9fdf194136105
   m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 80dbd04381421c442a812841b55b1e4a, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: d76e351110cfd1c449450bcc11a7d18e, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
