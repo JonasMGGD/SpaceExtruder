@@ -12,7 +12,7 @@ namespace PowerUps {
 
         private void Awake() {
             Instance = this;
-            player = FindObjectOfType<PlayerController>();
+            player = FindFirstObjectByType<PlayerController>();
         }
 
         public void ApplyPowerUp(PowerUpEffect effect) {
