@@ -24,6 +24,9 @@ namespace Player {
         private bool isInvulnerable;
         private Renderer[] renderers;
 
+        [Header("References")]
+        MusicManager manager;
+
         public void SetInvincible(bool active) { isInvulnerable = active; }
 
         public void SetRapidFire(bool active) { fireRate = active ? 0.05f : 0.2f; }
@@ -35,6 +38,7 @@ namespace Player {
         }
 
         private void Start() {
+            manager = FindFirstObjectByType<MusicManager>();
             rb = GetComponent<Rigidbody>();
             rb.useGravity = false;
             rb.constraints = RigidbodyConstraints.FreezeRotation;
@@ -104,6 +108,8 @@ namespace Player {
             int finalScore = ScoreManager.Instance.GetScore();
             string name = PlayerPrefs.GetString("PlayerName", "Unknown");
 
+
+            StartCoroutine(manager.MusicFade(0f, 0.7f));
             LeaderboardManager.Instance.AddScore(name, finalScore);
             PlayerPrefs.SetInt("LastScore", finalScore);
             Destroy(gameObject);

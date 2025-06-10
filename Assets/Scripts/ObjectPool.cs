@@ -39,6 +39,10 @@ public class ObjectPool : MonoBehaviour {
             return null;
         }
 
+        if (poolDictionary[tag].Count == 0) {
+            GameObject newObj = Instantiate(pools.Find(p => p.tag == tag).prefab);
+            return newObj;
+        }
         GameObject obj = poolDictionary[tag].Dequeue();
         obj.SetActive(true);
         obj.transform.position = position;

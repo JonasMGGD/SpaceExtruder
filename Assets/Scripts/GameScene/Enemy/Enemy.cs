@@ -1,4 +1,5 @@
 using System.Collections;
+using Score;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {

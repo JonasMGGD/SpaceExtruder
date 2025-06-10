@@ -9,26 +9,23 @@ namespace StartScene {
         public GameObject scoreEntryPrefab;
         public GameObject noScoresText;
         public GameObject powerUpInfo;
+        public GameObject settings;
+        [Header("Audio References")]
+        public AudioClip playButtonClickSound;
+        public AudioClip deleteScoresClickSound;
+        public AudioClip powerUpAndQuitInfoClickSound;
+
+        public AudioSource musicSource;
 
         private void Start() {
+            musicSource.loop = true;
+            musicSource.Play();
             powerUpInfo.SetActive(false);
+            settings.SetActive(false);
             DisplayScores();
         }
 
-        public void OnPlayClicked() {
-            string name = nameInput.text.Trim();
-            if (string.IsNullOrEmpty(name)) return;
-
-            PlayerPrefs.SetString("PlayerName", name);
-            SceneFader.Instance.FadeToScene("GameScene");
-        }
-
-        public void OnClearScoresClicked() {
-            LeaderboardManager.Instance.ClearScores();
-            DisplayScores();
-        }
-
-        public void DisplayScores() {
+        private void DisplayScores() {
             foreach (Transform child in leaderboardParent)
                 Destroy(child.gameObject);
 
@@ -66,20 +63,45 @@ namespace StartScene {
             }
         }
 
+        public void OnPlayClicked() {
+            string name = nameInput.text.Trim();
+            if (string.IsNullOrEmpty(name)) return;
+
+            PlayerPrefs.SetString("PlayerName", name);
+            SoundEffectsManager.instance.PlaySoundFX(playButtonClickSound, transform, "SFXVolume");
+            SceneFader.Instance.FadeToScene("GameScene");
+        }
+
+        public void OnClearScoresClicked() {
+            SoundEffectsManager.instance.PlaySoundFX(deleteScoresClickSound, transform, "SFXVolume");
+            LeaderboardManager.Instance.ClearScores();
+            DisplayScores();
+        }
+
         public void OnQuitClicked() {
+            SoundEffectsManager.instance.PlaySoundFX(powerUpAndQuitInfoClickSound, transform, "SFXVolume");
             Application.Quit();
         }
 
         public void OnPowerUpInfoClicked() {
-            if (powerUpInfo) {
-                powerUpInfo.SetActive(true);
-            }
+            SoundEffectsManager.instance.PlaySoundFX(powerUpAndQuitInfoClickSound, transform, "SFXVolume");
+            powerUpInfo.SetActive(true);
         }
 
         public void OnPowerUpInfoCloseClicked() {
-            if (powerUpInfo) {
-                powerUpInfo.SetActive(false);
-            }
+            SoundEffectsManager.instance.PlaySoundFX(powerUpAndQuitInfoClickSound, transform, "SFXVolume");
+            powerUpInfo.SetActive(false);
         }
+
+        public void OnSettingsClicked() {
+            SoundEffectsManager.instance.PlaySoundFX(powerUpAndQuitInfoClickSound, transform, "SFXVolume");
+            settings.SetActive(true);
+        }
+
+        public void OnSettingsCloseClicked() {
+            SoundEffectsManager.instance.PlaySoundFX(powerUpAndQuitInfoClickSound, transform, "SFXVolume");
+            settings.SetActive(false);
+        }
+
     }
 }

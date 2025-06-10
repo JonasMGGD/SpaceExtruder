@@ -4,8 +4,10 @@ using UnityEngine.Serialization;
 public class PauseMenu : MonoBehaviour {
        public GameObject pauseMenuCanvas;
        private bool paused;
+       private AudioSource Music;
 
        private void Start() {
+              Music = GameObject.Find("Music").GetComponent<AudioSource>();
               paused = false;
               pauseMenuCanvas.SetActive(false);
        }
@@ -18,10 +20,10 @@ public class PauseMenu : MonoBehaviour {
 
        private void TogglePause() {
               paused = !paused;
+              if (paused) Music.Pause();
+              else Music.UnPause();
               pauseMenuCanvas.SetActive(paused);
               Time.timeScale = paused ? 0f : 1f;
-              Cursor.lockState = paused ? CursorLockMode.None : CursorLockMode.Locked;
-              Cursor.visible = paused;
        }
 
        public void OnMenu() {

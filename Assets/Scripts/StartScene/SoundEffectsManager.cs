@@ -1,0 +1,25 @@
+using UnityEngine;
+using UnityEngine.Audio;
+
+namespace StartScene {
+    public class SoundEffectsManager : MonoBehaviour {
+        public static SoundEffectsManager instance;
+        [SerializeField] private AudioSource audioSource;
+
+        private void Awake() {
+            if (!instance) {
+                instance = this;
+            }
+        }
+
+        public void PlaySoundFX(AudioClip clip, Transform spawnPosition, string groupName) {
+            AudioSource source = Instantiate(audioSource, spawnPosition.position, Quaternion.identity);
+
+            source.clip = clip;
+            source.volume = PlayerPrefs.GetFloat(groupName, 1f);
+            source.Play();
+
+            Destroy(source.gameObject, clip.length);
+        }
+    }
+}

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - EnemyHeinz
+  - Backgroundmusic
   layers:
   - Default
   - TransparentFX
