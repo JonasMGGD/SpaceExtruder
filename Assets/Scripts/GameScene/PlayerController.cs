@@ -1,6 +1,6 @@
 ﻿using System.Collections;
+using StartScene;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Player {
@@ -17,27 +17,30 @@ namespace Player {
         private float fireCooldown = 0f;
 
         [Header("Health")]
-        private int maxHealth = 3;
+        public int maxHealth;
         private int currentHealth;
-        public Image[] heartImages;
+        public Slider healthSlider;
         public float invulTime = 0.2f;
         private bool isInvulnerable;
         private Renderer[] renderers;
 
-        [Header("References")]
-        MusicManager manager;
+        [Header("Audio")]
+        private MusicManager manager;
+        public AudioClip shootSound;
+        public AudioClip deathSound;
+        private float shootSoundCooldownDefault = 0.2f;
+        private float shootSoundCooldown = 0.2f;
 
         public void SetInvincible(bool active) { isInvulnerable = active; }
 
-        public void SetRapidFire(bool active) { fireRate = active ? 0.05f : 0.2f; }
-
-        public void Heal(int amount) {
-            if(currentHealth == maxHealth) return;
-            currentHealth += amount;
-            UpdateHearts();
+        public void SetRapidFire(bool active) {
+            fireRate = active ? 0.05f : 0.2f;
+            shootSoundCooldownDefault = active ? 0.1f : 0.2f;
         }
 
         private void Start() {
+            maxHealth = PlayerPrefs.GetInt("Health", 10);
+            Debug.Log("Max Health: " + maxHealth);
             manager = FindFirstObjectByType<MusicManager>();
             rb = GetComponent<Rigidbody>();
             rb.useGravity = false;
@@ -47,7 +50,15 @@ namespace Player {
             renderers = GetComponentsInChildren<Renderer>();
 
             currentHealth = maxHealth;
-            UpdateHearts();
+            healthSlider.maxValue = PlayerPrefs.GetInt("Health", maxHealth);
+            healthSlider.value = currentHealth;
+            UpdateHealthBar();
+        }
+
+        public void Heal(int amount) {
+            if(currentHealth == maxHealth) return;
+            currentHealth += amount;
+            UpdateHealthBar();
         }
 
         private void Update() {
@@ -55,8 +66,13 @@ namespace Player {
             UpdatePosition();
 
             fireCooldown -= Time.deltaTime;
+            shootSoundCooldown -= Time.deltaTime;
             if (Input.GetMouseButton(0) && fireCooldown <= 0f) {
                 Shoot();
+                if (shootSoundCooldown <= 0f) {
+                    SoundEffectsManager.instance.PlaySoundFX(shootSound, transform, "SFXVolume");
+                    shootSoundCooldown = shootSoundCooldownDefault;
+                }
                 fireCooldown = fireRate;
             }
         }
@@ -78,6 +94,10 @@ namespace Player {
             rb.MovePosition(basePosition);
         }
 
+        private void UpdateHealthBar() {
+            healthSlider.value = currentHealth;
+        }
+
         // ReSharper disable Unity.PerformanceAnalysis
         private void Shoot() {
             ObjectPool.Instance.SpawnFromPool("PlayerProjectile", firePoint.position, firePoint.rotation);
@@ -88,27 +108,17 @@ namespace Player {
 
             currentHealth -= amount;
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-            UpdateHearts();
+            UpdateHealthBar();
 
-            if (currentHealth <= 0) {
-                Die();
-            }
-            else {
-                StartCoroutine(InvulnerabilityFlash());
-            }
-        }
-
-        private void UpdateHearts() {
-            for (int i = 0; i < heartImages.Length; i++) {
-                heartImages[i].enabled = i < currentHealth;
-            }
+            if (currentHealth <= 0) Die();
+            else StartCoroutine(InvulnerabilityFlash());
         }
 
         private void Die() {
             int finalScore = ScoreManager.Instance.GetScore();
             string name = PlayerPrefs.GetString("PlayerName", "Unknown");
 
-
+            SoundEffectsManager.instance.PlaySoundFX(deathSound, transform, "SFXVolume");
             StartCoroutine(manager.MusicFade(0f, 0.7f));
             LeaderboardManager.Instance.AddScore(name, finalScore);
             PlayerPrefs.SetInt("LastScore", finalScore);

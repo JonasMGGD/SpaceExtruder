@@ -1,6 +1,9 @@
+using System.Collections;
 using System.Linq;
+using Sounds;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace StartScene {
     public class StartSceneScript : MonoBehaviour {
@@ -10,19 +13,56 @@ namespace StartScene {
         public GameObject noScoresText;
         public GameObject powerUpInfo;
         public GameObject settings;
+        private CanvasGroup settingsGroup;
+        private CanvasGroup powerUpInfoGroup;
         [Header("Audio References")]
         public AudioClip playButtonClickSound;
         public AudioClip deleteScoresClickSound;
         public AudioClip powerUpAndQuitInfoClickSound;
+        [Header("Settings")]
+        public TMP_Text healthValueText;
+        private int healthValue;
+        public int minHealth = 1;
+        public int maxHealth = 20;
+        public Slider masterSlider;
+        public Slider musicSlider;
+        public Slider sfxSlider;
 
         public AudioSource musicSource;
 
+        private void Awake() {
+            if (masterSlider) {
+                float value = PlayerPrefs.GetFloat("MasterVolume", 1f);
+                masterSlider.value = value;
+                masterSlider.onValueChanged.AddListener(volume => SoundMixerManager.Instance.SetMasterVolume(volume));
+            }
+
+            if (musicSlider) {
+                float value = PlayerPrefs.GetFloat("MusicVolume", 1f);
+                musicSlider.value = value;
+                musicSlider.onValueChanged.AddListener(volume => SoundMixerManager.Instance.SetMusicVolume(volume));
+            }
+
+            if (sfxSlider) {
+                float value = PlayerPrefs.GetFloat("SFXVolume", 1f);
+                sfxSlider.value = value;
+                sfxSlider.onValueChanged.AddListener(volume => SoundMixerManager.Instance.SetSFXVolume(volume));
+            }
+        }
+
         private void Start() {
+            settingsGroup = settings.GetComponent<CanvasGroup>();
+            powerUpInfoGroup = powerUpInfo.GetComponent<CanvasGroup>();
+            settings.SetActive(false);
+            powerUpInfo.SetActive(false);
+            settingsGroup.alpha = 0f;
+            powerUpInfoGroup.alpha = 0f;
+
             musicSource.loop = true;
             musicSource.Play();
-            powerUpInfo.SetActive(false);
-            settings.SetActive(false);
             DisplayScores();
+            healthValue = PlayerPrefs.GetInt("Health", 10);
+            UpdateHealthDisplay();
         }
 
         private void DisplayScores() {
@@ -85,23 +125,63 @@ namespace StartScene {
 
         public void OnPowerUpInfoClicked() {
             SoundEffectsManager.instance.PlaySoundFX(powerUpAndQuitInfoClickSound, transform, "SFXVolume");
-            powerUpInfo.SetActive(true);
+            StartCoroutine(FadeCanvasGroup(powerUpInfoGroup, true));
         }
 
         public void OnPowerUpInfoCloseClicked() {
             SoundEffectsManager.instance.PlaySoundFX(powerUpAndQuitInfoClickSound, transform, "SFXVolume");
-            powerUpInfo.SetActive(false);
+            StartCoroutine(FadeCanvasGroup(powerUpInfoGroup, false));
         }
 
         public void OnSettingsClicked() {
             SoundEffectsManager.instance.PlaySoundFX(powerUpAndQuitInfoClickSound, transform, "SFXVolume");
-            settings.SetActive(true);
+            StartCoroutine(FadeCanvasGroup(settingsGroup, true));
         }
 
-        public void OnSettingsCloseClicked() {
+        public void OnSettingsSaveClicked() {
             SoundEffectsManager.instance.PlaySoundFX(powerUpAndQuitInfoClickSound, transform, "SFXVolume");
-            settings.SetActive(false);
+            PlayerPrefs.SetInt("Health", healthValue);
+            StartCoroutine(FadeCanvasGroup(settingsGroup, false));
         }
 
+        public void OnIncreaseHealthClicked() {
+            if (healthValue < maxHealth) {
+                SoundEffectsManager.instance.PlaySoundFX(powerUpAndQuitInfoClickSound, transform, "SFXVolume");
+                healthValue++;
+                UpdateHealthDisplay();
+            }
+        }
+
+        public void OnDecreaseHealthClicked() {
+            if (healthValue > minHealth) {
+                SoundEffectsManager.instance.PlaySoundFX(powerUpAndQuitInfoClickSound, transform, "SFXVolume");
+                healthValue--;
+                UpdateHealthDisplay();
+            }
+        }
+
+        private void UpdateHealthDisplay() {
+            healthValueText.text = healthValue.ToString();
+        }
+
+        private IEnumerator FadeCanvasGroup(CanvasGroup group, bool fadeIn, float duration = 0.1f) {
+            if (fadeIn) group.gameObject.SetActive(true);
+
+            float start = group.alpha;
+            float end = fadeIn ? 1f : 0f;
+            float time = 0f;
+
+            while (time < duration) {
+                time += Time.unscaledDeltaTime;
+                group.alpha = Mathf.Lerp(start, end, time / duration);
+                yield return null;
+            }
+
+            group.alpha = end;
+            group.interactable = fadeIn;
+            group.blocksRaycasts = fadeIn;
+
+            if (!fadeIn) group.gameObject.SetActive(false);
+        }
     }
 }

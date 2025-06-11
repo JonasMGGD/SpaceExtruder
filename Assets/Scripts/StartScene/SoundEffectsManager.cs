@@ -15,6 +15,7 @@ namespace StartScene {
         public void PlaySoundFX(AudioClip clip, Transform spawnPosition, string groupName) {
             AudioSource source = Instantiate(audioSource, spawnPosition.position, Quaternion.identity);
 
+            if (clip.name == "shootSound")source.pitch = Random.Range(0.8f, 1.2f);
             source.clip = clip;
             source.volume = PlayerPrefs.GetFloat(groupName, 1f);
             source.Play();
