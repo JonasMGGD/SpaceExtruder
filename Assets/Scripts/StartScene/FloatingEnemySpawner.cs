@@ -5,23 +5,22 @@ namespace StartScene {
         public float spawnInterval = 3f;
         public Vector2 xSpawnRange = new(-40f, 40f);
         public float yStart = -20f;
-        public float zPlane = 0f;
+        public float zPlane;
 
-        private float timer;
+        private float _timer;
 
         private void Update() {
-            timer -= Time.deltaTime;
+            _timer -= Time.deltaTime;
 
-            if (timer <= 0f) {
-                Spawn();
-                timer = spawnInterval + Random.Range(-1f, 1f);
-            }
+            if (!(_timer <= 0f)) return;
+            Spawn();
+            _timer = spawnInterval + Random.Range(-1f, 1f);
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
-        void Spawn() {
-            Vector3 spawnPos = new Vector3(Random.Range(xSpawnRange.x, xSpawnRange.y), yStart, zPlane);
-            ObjectPool.Instance.SpawnFromPool("Enemy", spawnPos, Quaternion.Euler(180f, 90f, 90f));
+        private void Spawn() {
+            var spawnPos = new Vector3(Random.Range(xSpawnRange.x, xSpawnRange.y), yStart, zPlane);
+            ObjectPool.instance.SpawnFromPool("Enemy", spawnPos, Quaternion.Euler(180f, 90f, 90f));
         }
     }
 }

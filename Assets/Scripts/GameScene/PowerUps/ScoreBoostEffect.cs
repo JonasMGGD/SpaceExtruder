@@ -1,13 +1,13 @@
-﻿using Player;
+﻿using Score;
 using UnityEngine;
 
-namespace PowerUps {
+namespace GameScene.PowerUps {
     [CreateAssetMenu(menuName = "PowerUps/ScoreBoost")]
     public class ScoreBoostEffect : PowerUpEffect {
-        private readonly int scoreBoostAmount = 500;
+        private const int ScoreBoostAmount = 500;
 
         public override void Activate(PlayerController player) {
-            ScoreManager.Instance.AddScore(scoreBoostAmount);
+            ScoreManager.instance.AddScore(ScoreBoostAmount);
         }
 
         public override void Deactivate(PlayerController player) { }

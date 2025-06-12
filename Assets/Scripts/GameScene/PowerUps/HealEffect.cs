@@ -1,7 +1,6 @@
-﻿using Player;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace PowerUps {
+namespace GameScene.PowerUps {
     [CreateAssetMenu(menuName = "PowerUps/Heal")]
     public class HealEffect : PowerUpEffect{
         public override void Activate(PlayerController player) {

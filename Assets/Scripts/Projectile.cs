@@ -1,4 +1,5 @@
-using Player;
+using GameScene;
+using GameScene.Enemy;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour {
@@ -6,35 +7,38 @@ public class Projectile : MonoBehaviour {
     public float maxLifetime = 3f;
     public bool isEnemyProjectile;
 
-    private float lifetime;
+    private float _lifetime;
 
     private void OnEnable() {
-        lifetime = 0f;
+        _lifetime = 0f;
     }
 
     private void Update() {
         transform.position += transform.forward * (speed * Time.deltaTime);
 
-        lifetime += Time.deltaTime;
-        if (lifetime >= maxLifetime && !isEnemyProjectile) {
-            ObjectPool.Instance.ReturnToPool("PlayerProjectile", gameObject);
+        _lifetime += Time.deltaTime;
+        if (_lifetime >= maxLifetime && !isEnemyProjectile) {
+            ObjectPool.instance.ReturnToPool("PlayerProjectile", gameObject);
         }
-        else if (lifetime >= maxLifetime && isEnemyProjectile) {
-            ObjectPool.Instance.ReturnToPool("EnemyProjectile", gameObject);
+        else if (_lifetime >= maxLifetime && isEnemyProjectile) {
+            ObjectPool.instance.ReturnToPool("EnemyProjectile", gameObject);
         }
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (isEnemyProjectile && other.CompareTag("Player")) {
-            other.GetComponent<PlayerController>()?.TakeDamage(1);
-            ObjectPool.Instance.ReturnToPool("EnemyProjectile", gameObject);
-        }
-        else if (!isEnemyProjectile && (other.CompareTag("Enemy") || other.CompareTag("EnemyHeinz"))) {
-            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
-            if (enemyHealth != null) {
-                enemyHealth.TakeDamage(1);
+        switch (isEnemyProjectile) {
+            case true when other.CompareTag("Player"):
+                other.GetComponent<PlayerController>()?.TakeDamage(1);
+                ObjectPool.instance.ReturnToPool("EnemyProjectile", gameObject);
+                break;
+            case false when (other.CompareTag("Enemy") || other.CompareTag("EnemyHeinz")): {
+                var enemyHealth = other.GetComponent<EnemyHealth>();
+                if (enemyHealth != null) {
+                    enemyHealth.TakeDamage(1);
+                }
+                ObjectPool.instance.ReturnToPool("PlayerProjectile", gameObject);
+                break;
             }
-            ObjectPool.Instance.ReturnToPool("PlayerProjectile", gameObject);
         }
     }
 }

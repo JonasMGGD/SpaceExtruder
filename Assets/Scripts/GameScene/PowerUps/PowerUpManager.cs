@@ -1,30 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
-using Player;
 using UnityEngine;
 
-namespace PowerUps {
+namespace GameScene.PowerUps {
     public class PowerUpManager : MonoBehaviour {
-        public static PowerUpManager Instance;
-        private PlayerController player;
-        private readonly List<Coroutine> activeCoroutines = new();
+        public static PowerUpManager instance;
+        private PlayerController _player;
 
 
         private void Awake() {
-            Instance = this;
-            player = FindFirstObjectByType<PlayerController>();
+            instance = this;
+            _player = FindFirstObjectByType<PlayerController>();
         }
 
         public void ApplyPowerUp(PowerUpEffect effect) {
-            effect.Activate(player);
-            Coroutine c = StartCoroutine(RemoveAfterDelay(effect));
-            activeCoroutines.Add(c);
+            effect.Activate(_player);
+            StartCoroutine(RemoveAfterDelay(effect));
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator RemoveAfterDelay(PowerUpEffect effect) {
             yield return new WaitForSeconds(effect.duration);
-            effect.Deactivate(player);
+            effect.Deactivate(_player);
         }
     }
 }

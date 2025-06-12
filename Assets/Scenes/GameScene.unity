@@ -2305,9 +2305,9 @@ MonoBehaviour:
   fireRate: 0.2
   maxHealth: 10
   healthSlider: {fileID: 1248180124}
-  invulTime: 0.2
   shootSound: {fileID: 8300000, guid: 75ea5e85bbb400540b8cea08cd179b1b, type: 3}
   deathSound: {fileID: 8300000, guid: 9c47119325ddaf947aa3ce8fa7aa4f66, type: 3}
+  hitSound: {fileID: 8300000, guid: 5f018d5d3f48a644eb9772c5242c4544, type: 3}
 --- !u!65 &1019837363
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1,17 +1,19 @@
 using UnityEngine;
 
-public class FloorScript : MonoBehaviour {
-    private Transform cam;
+namespace BG {
+    public class FloorScript : MonoBehaviour {
+        private Transform _cam;
 
-    void Start() {
-        cam = Camera.main.transform;
-    }
+        private void Start() {
+            _cam = Camera.main.transform;
+        }
 
-    void Update() {
-        transform.position = new Vector3(
-            0f,
-            -2f,
-            cam.position.z
-        );
+        private void Update() {
+            transform.position = new Vector3(
+                0f,
+                -2f,
+                _cam.position.z
+            );
+        }
     }
 }

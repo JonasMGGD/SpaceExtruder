@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace PowerUps {
+namespace GameScene.PowerUps {
     public class PowerUpSpawner : MonoBehaviour {
         public GameObject[] powerUps;
 
@@ -17,15 +17,15 @@ namespace PowerUps {
         IEnumerator SpawnLoop() {
             while (true) {
                 yield return new WaitForSeconds(spawnInterval);
-                string tag = powerUps[Random.Range(0, powerUps.Length)].name;
+                var spawnTag = powerUps[Random.Range(0, powerUps.Length)].name;
 
-                Vector3 spawnPos = new Vector3(
+                var spawnPos = new Vector3(
                     Random.Range(-spawnRadius, spawnRadius),
                     0f,
                     spawnZOffset + Random.Range(-2f, 2f)
                 );
 
-                ObjectPool.Instance.SpawnFromPool(tag, spawnPos, Quaternion.identity);
+                ObjectPool.instance.SpawnFromPool(spawnTag, spawnPos, Quaternion.identity);
             }
         }
     }

@@ -1,7 +1,6 @@
-using Player;
 using UnityEngine;
 
-namespace PowerUps {
+namespace GameScene.PowerUps {
     public abstract class PowerUpEffect : ScriptableObject {
         public float duration = 5f;
 

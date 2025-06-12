@@ -1,63 +1,67 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using Score;
+using Sounds;
 using StartScene;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Player {
+namespace GameScene {
     public class PlayerController : MonoBehaviour {
         [Header("Movement")] public float moveSpeed = 20f;
         public Vector2 xLimits = new(-10f, 10f);
         public Vector2 zOffsetLimits = new(-5f, 5f);
-        private Rigidbody rb;
-        private Transform cam;
-        private Vector3 offset = Vector3.zero;
+        private Rigidbody _rb;
+        private Transform _cam;
+        private Vector3 _offset = Vector3.zero;
 
         [Header("Shooting")] public Transform firePoint;
         public float fireRate = 0.2f;
-        private float fireCooldown = 0f;
+        private float _fireCooldown;
 
-        [Header("Health")]
-        public int maxHealth;
-        private int currentHealth;
+        [Header("Health")] public int maxHealth;
+        private int _currentHealth;
         public Slider healthSlider;
-        public float invulTime = 0.2f;
-        private bool isInvulnerable;
-        private Renderer[] renderers;
+        private const float InvulTime = 0.2f;
+        private bool _isInvulnerable;
+        private Renderer[] _renderers;
 
-        [Header("Audio")]
-        private MusicManager manager;
+        [Header("Audio")] private MusicManager _manager;
         public AudioClip shootSound;
         public AudioClip deathSound;
-        private float shootSoundCooldownDefault = 0.2f;
-        private float shootSoundCooldown = 0.2f;
+        public AudioClip hitSound;
+        private float _shootSoundCooldownDefault = 0.2f;
+        private float _shootSoundCooldown = 0.2f;
 
-        public void SetInvincible(bool active) { isInvulnerable = active; }
+        public void SetInvincible(bool active) {
+            _isInvulnerable = active;
+        }
 
         public void SetRapidFire(bool active) {
             fireRate = active ? 0.05f : 0.2f;
-            shootSoundCooldownDefault = active ? 0.1f : 0.2f;
+            _shootSoundCooldownDefault = active ? 0.1f : 0.2f;
         }
 
         private void Start() {
             maxHealth = PlayerPrefs.GetInt("Health", 10);
             Debug.Log("Max Health: " + maxHealth);
-            manager = FindFirstObjectByType<MusicManager>();
-            rb = GetComponent<Rigidbody>();
-            rb.useGravity = false;
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
+            _manager = FindFirstObjectByType<MusicManager>();
+            _rb = GetComponent<Rigidbody>();
+            _rb.useGravity = false;
+            _rb.constraints = RigidbodyConstraints.FreezeRotation;
 
-            cam = Camera.main.transform;
-            renderers = GetComponentsInChildren<Renderer>();
+            _cam = Camera.main.transform;
+            _renderers = GetComponentsInChildren<Renderer>();
 
-            currentHealth = maxHealth;
+            _currentHealth = maxHealth;
             healthSlider.maxValue = PlayerPrefs.GetInt("Health", maxHealth);
-            healthSlider.value = currentHealth;
+            healthSlider.value = _currentHealth;
             UpdateHealthBar();
         }
 
         public void Heal(int amount) {
-            if(currentHealth == maxHealth) return;
-            currentHealth += amount;
+            if (_currentHealth == maxHealth) return;
+            _currentHealth += amount;
             UpdateHealthBar();
         }
 
@@ -65,78 +69,79 @@ namespace Player {
             HandleInput();
             UpdatePosition();
 
-            fireCooldown -= Time.deltaTime;
-            shootSoundCooldown -= Time.deltaTime;
-            if (Input.GetMouseButton(0) && fireCooldown <= 0f) {
-                Shoot();
-                if (shootSoundCooldown <= 0f) {
-                    SoundEffectsManager.instance.PlaySoundFX(shootSound, transform, "SFXVolume");
-                    shootSoundCooldown = shootSoundCooldownDefault;
-                }
-                fireCooldown = fireRate;
+            _fireCooldown -= Time.deltaTime;
+            _shootSoundCooldown -= Time.deltaTime;
+            if (!Input.GetMouseButton(0) || !(_fireCooldown <= 0f)) return;
+            Shoot();
+            if (_shootSoundCooldown <= 0f) {
+                SoundEffectsManager.instance.PlaySoundFX(shootSound, transform, "SFXVolume");
+                _shootSoundCooldown = _shootSoundCooldownDefault;
             }
+
+            _fireCooldown = fireRate;
         }
 
         private void HandleInput() {
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
+            var h = Input.GetAxisRaw("Horizontal");
+            var v = Input.GetAxisRaw("Vertical");
 
-            Vector3 input = new Vector3(h, 0, v).normalized * (moveSpeed * Time.deltaTime);
-            offset += input;
+            var input = new Vector3(h, 0, v).normalized * (moveSpeed * Time.deltaTime);
+            _offset += input;
 
-            offset.x = Mathf.Clamp(offset.x, xLimits.x, xLimits.y);
-            offset.z = Mathf.Clamp(offset.z, zOffsetLimits.x, zOffsetLimits.y);
+            _offset.x = Mathf.Clamp(_offset.x, xLimits.x, xLimits.y);
+            _offset.z = Mathf.Clamp(_offset.z, zOffsetLimits.x, zOffsetLimits.y);
         }
 
         private void UpdatePosition() {
-            Vector3 basePosition = cam.position + offset;
+            var basePosition = _cam.position + _offset;
             basePosition.y = transform.position.y;
-            rb.MovePosition(basePosition);
+            _rb.MovePosition(basePosition);
         }
 
         private void UpdateHealthBar() {
-            healthSlider.value = currentHealth;
+            healthSlider.value = _currentHealth;
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
         private void Shoot() {
-            ObjectPool.Instance.SpawnFromPool("PlayerProjectile", firePoint.position, firePoint.rotation);
+            ObjectPool.instance.SpawnFromPool("PlayerProjectile", firePoint.position, firePoint.rotation);
         }
 
         public void TakeDamage(int amount) {
-            if (isInvulnerable) return;
-
-            currentHealth -= amount;
-            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+            if (_isInvulnerable) return;
+            _currentHealth -= amount;
+            _currentHealth = Mathf.Clamp(_currentHealth, 0, maxHealth);
+            if (_currentHealth <= 0) Die();
+            else {
+                StartCoroutine(InvulnerabilityFlash());
+                SoundEffectsManager.instance.PlaySoundFX(hitSound, transform, "SFXVolume");
+            }
             UpdateHealthBar();
-
-            if (currentHealth <= 0) Die();
-            else StartCoroutine(InvulnerabilityFlash());
         }
 
         private void Die() {
-            int finalScore = ScoreManager.Instance.GetScore();
-            string name = PlayerPrefs.GetString("PlayerName", "Unknown");
+            var finalScore = ScoreManager.instance.GetScore();
+            var name = PlayerPrefs.GetString("PlayerName", "Unknown");
 
-            ObjectPool.Instance.SpawnFromPool("ExplosionEffect", transform.position, Quaternion.identity);
+            ObjectPool.instance.SpawnFromPool("ExplosionEffect", transform.position, Quaternion.identity);
             SoundEffectsManager.instance.PlaySoundFX(deathSound, transform, "SFXVolume");
-            StartCoroutine(manager.MusicFade(0f, 0.7f));
-            LeaderboardManager.Instance.AddScore(name, finalScore);
+            StartCoroutine(_manager.MusicFade(0f, 0.7f));
+            LeaderboardManager.instance.AddScore(name, finalScore);
             PlayerPrefs.SetInt("LastScore", finalScore);
             Destroy(gameObject);
 
             Time.timeScale = 0f;
-            SceneFader.Instance.FadeToScene("EndScene");
+            SceneFader.instance.FadeToScene("EndScene");
         }
 
         private IEnumerator InvulnerabilityFlash() {
-            isInvulnerable = true;
+            _isInvulnerable = true;
 
-            float elapsed = 0f;
-            float flashInterval = 0.05f;
-            bool visible = true;
+            var elapsed = 0f;
+            var flashInterval = 0.05f;
+            var visible = true;
 
-            while (elapsed < invulTime) {
+            while (elapsed < InvulTime) {
                 visible = !visible;
                 SetRendererVisibility(visible);
                 yield return new WaitForSeconds(flashInterval);
@@ -144,11 +149,11 @@ namespace Player {
             }
 
             SetRendererVisibility(true);
-            isInvulnerable = false;
+            _isInvulnerable = false;
         }
 
         private void SetRendererVisibility(bool visible) {
-            foreach (Renderer rend in renderers) {
+            foreach (Renderer rend in _renderers) {
                 rend.enabled = visible;
             }
         }

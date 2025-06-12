@@ -1,7 +1,6 @@
-﻿using Player;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace PowerUps {
+namespace GameScene.PowerUps {
     [CreateAssetMenu(menuName = "PowerUps/RapidFire")]
     public class RapidFireEffect : PowerUpEffect {
         public override void Activate(PlayerController player) {

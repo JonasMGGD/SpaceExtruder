@@ -1135,11 +1135,11 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
+  m_enableVertexGradient: 1
+  m_colorMode: 2
   m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
+    topLeft: {r: 0.20392157, g: 1, b: 0, a: 1}
+    topRight: {r: 0.20392157, g: 1, b: 0, a: 1}
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
@@ -6300,13 +6300,13 @@ MonoBehaviour:
   playButtonClickSound: {fileID: 8300000, guid: fbbd2a3c4ead7474d848894e0ad983f3, type: 3}
   deleteScoresClickSound: {fileID: 8300000, guid: ce0df43ef65f47b43b564e1d15446848, type: 3}
   powerUpAndQuitInfoClickSound: {fileID: 8300000, guid: 4c7b325a60b08f4438a2347a16888269, type: 3}
+  musicSource: {fileID: 2137704341}
   healthValueText: {fileID: 1129872725}
   minHealth: 1
   maxHealth: 20
   masterSlider: {fileID: 445418098}
   musicSlider: {fileID: 1039656606}
   sfxSlider: {fileID: 974741116}
-  musicSource: {fileID: 2137704341}
 --- !u!4 &1435320845
 Transform:
   m_ObjectHideFlags: 0

@@ -15,16 +15,16 @@ public class ScoreList {
 }
 
 public class LeaderboardManager : MonoBehaviour {
-    public static LeaderboardManager Instance;
+    public static LeaderboardManager instance;
 
     public List<ScoreEntry> scores = new List<ScoreEntry>();
-    private string savePath;
+    private string _savePath;
 
     private void Awake() {
-        if (!Instance) {
-            Instance = this;
+        if (!instance) {
+            instance = this;
             DontDestroyOnLoad(gameObject);
-            savePath = Application.persistentDataPath + "/scores.json";
+            _savePath = Application.persistentDataPath + "/scores.json";
             LoadScores();
         }
         else {
@@ -47,20 +47,19 @@ public class LeaderboardManager : MonoBehaviour {
 
     public void ClearScores() {
         scores.Clear();
-        File.Delete(savePath);
+        File.Delete(_savePath);
     }
 
     private void SaveScores() {
-        ScoreList data = new ScoreList { entries = scores };
-        string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(savePath, json);
+        var data = new ScoreList { entries = scores };
+        var json = JsonUtility.ToJson(data, true);
+        File.WriteAllText(_savePath, json);
     }
 
     private void LoadScores() {
-        if (File.Exists(savePath)) {
-            string json = File.ReadAllText(savePath);
-            ScoreList data = JsonUtility.FromJson<ScoreList>(json);
-            scores = data.entries ?? new List<ScoreEntry>();
-        }
+        if (!File.Exists(_savePath)) return;
+        var json = File.ReadAllText(_savePath);
+        var data = JsonUtility.FromJson<ScoreList>(json);
+        scores = data.entries ?? new List<ScoreEntry>();
     }
 }

@@ -9,7 +9,7 @@ namespace GameScene {
 
         private IEnumerator DisableAfterSeconds(float t) {
             yield return new WaitForSeconds(t);
-            ObjectPool.Instance.ReturnToPool("ExplosionEffect", gameObject);
+            ObjectPool.instance.ReturnToPool("ExplosionEffect", gameObject);
         }
     }
 }

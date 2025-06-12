@@ -1,7 +1,6 @@
-﻿using Player;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace PowerUps {
+namespace GameScene.PowerUps {
     [CreateAssetMenu(menuName = "PowerUps/Invincibility")]
     public class InvincibilityEffect : PowerUpEffect{
         public override void Activate(PlayerController player) {
