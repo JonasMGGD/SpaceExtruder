@@ -118,6 +118,7 @@ namespace Player {
             int finalScore = ScoreManager.Instance.GetScore();
             string name = PlayerPrefs.GetString("PlayerName", "Unknown");
 
+            ObjectPool.Instance.SpawnFromPool("ExplosionEffect", transform.position, Quaternion.identity);
             SoundEffectsManager.instance.PlaySoundFX(deathSound, transform, "SFXVolume");
             StartCoroutine(manager.MusicFade(0f, 0.7f));
             LeaderboardManager.Instance.AddScore(name, finalScore);

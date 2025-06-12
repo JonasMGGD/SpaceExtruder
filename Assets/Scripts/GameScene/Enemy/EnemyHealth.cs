@@ -1,9 +1,11 @@
 ﻿using Score;
+using StartScene;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour {
     public int maxHealth = 3;
     private int currentHealth;
+    public AudioClip scoreUp;
 
     public EnemyHealthUI healthUI;
 
@@ -40,6 +42,8 @@ public class EnemyHealth : MonoBehaviour {
             FloatingScoreManager.Instance.SpawnScore(transform.position, 10);
         }
 
+        SoundEffectsManager.instance.PlaySoundFX(scoreUp, transform, "SFXVolume");
+        ObjectPool.Instance.SpawnFromPool("ExplosionEffect", transform.position, Quaternion.identity);
         ObjectPool.Instance.ReturnToPool(poolTag, gameObject);
     }
 }

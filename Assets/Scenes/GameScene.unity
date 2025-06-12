@@ -1743,6 +1743,9 @@ MonoBehaviour:
   - tag: HealEffect
     prefab: {fileID: 1375783060950928923, guid: 820ff721f2c57bb4c9d6553d36f173d2, type: 3}
     size: 5
+  - tag: ExplosionEffect
+    prefab: {fileID: 8920896018635235743, guid: 2273315f58e1a2b45851da6c000778f2, type: 3}
+    size: 10
 --- !u!1 &823373515
 GameObject:
   m_ObjectHideFlags: 0
@@ -2304,7 +2307,7 @@ MonoBehaviour:
   healthSlider: {fileID: 1248180124}
   invulTime: 0.2
   shootSound: {fileID: 8300000, guid: 75ea5e85bbb400540b8cea08cd179b1b, type: 3}
-  deathSound: {fileID: 8300000, guid: e619b051ee3ccfa4d86b9b824b018100, type: 3}
+  deathSound: {fileID: 8300000, guid: 9c47119325ddaf947aa3ce8fa7aa4f66, type: 3}
 --- !u!65 &1019837363
 BoxCollider:
   m_ObjectHideFlags: 0

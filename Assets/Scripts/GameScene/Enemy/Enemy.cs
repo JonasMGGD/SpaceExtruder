@@ -1,5 +1,6 @@
 using System.Collections;
 using Score;
+using StartScene;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
@@ -17,6 +18,8 @@ public class Enemy : MonoBehaviour {
     private float xChangeTimer;
     private float xVelocity;
     public float smoothTime = 0.3f;
+
+    public AudioClip scoreDown;
 
     private void Start() {
         cam = Camera.main.transform;
@@ -82,6 +85,7 @@ public class Enemy : MonoBehaviour {
                 ScoreManager.Instance.AddScore(-10);
                 FloatingScoreManager.Instance.SpawnScore(transform.position, -10);
             }
+            SoundEffectsManager.instance.PlaySoundFX(scoreDown, transform, "SFXVolume");
             ObjectPool.Instance.ReturnToPool(enemyTag, gameObject);
         }
     }

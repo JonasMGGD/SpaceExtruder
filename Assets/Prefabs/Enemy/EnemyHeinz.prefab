@@ -164,6 +164,7 @@ MonoBehaviour:
   xMin: -55
   xMax: 55
   smoothTime: 0.1
+  scoreDown: {fileID: 8300000, guid: 53c4a6cfa18f6bd42a4c205a504e2daf, type: 3}
 --- !u!136 &6862153664610182146
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -200,6 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
+  scoreUp: {fileID: 8300000, guid: c2fd3950d5a8b9d42a4892939ee0e23f, type: 3}
   healthUI: {fileID: 6663402129002163343}
 --- !u!1 &6891901398410674301
 GameObject:
